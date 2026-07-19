@@ -1,0 +1,31 @@
+name: ShipProof
+description: Check whether a repository is ready to ship and summarize the findings in GitHub Actions.
+author: CalvaryBloom
+
+branding:
+  icon: check-circle
+  color: green
+
+inputs:
+  path:
+    description: Repository-relative directory to analyze.
+    required: false
+    default: .
+  fail-on-issues:
+    description: Fail the workflow when ShipProof finds one or more blocking issues.
+    required: false
+    default: "true"
+
+outputs:
+  score:
+    description: Readiness score from 0 to 100.
+  readiness:
+    description: Readiness category reported by ShipProof.
+  warnings:
+    description: Number of warning checks.
+  failed:
+    description: Number of failed checks.
+
+runs:
+  using: node24
+  main: dist/src/action.js

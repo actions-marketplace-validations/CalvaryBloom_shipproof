@@ -2,6 +2,15 @@
 
 Notable changes follow [Semantic Versioning](https://semver.org/).
 
+## 0.2.0 - 2026-07-19
+
+### Added
+
+- Reusable GitHub Action with a native Node.js 24 runtime.
+- Workflow summary containing the score and actionable findings.
+- Action outputs for readiness, score, warnings, and failed checks.
+- CI smoke test that executes the action exactly as a consumer would.
+
 ## 0.1.0 - 2026-07-19
 
 ### Added

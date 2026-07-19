@@ -42,3 +42,26 @@ jobs:
       - name: Verify package contents
         if: matrix.node-version == 22
         run: pnpm pack --dry-run
+
+  action:
+    name: GitHub Action smoke test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Run ShipProof action
+        id: shipproof
+        uses: ./
+        with:
+          fail-on-issues: false
+
+      - name: Verify action outputs
+        shell: bash
+        env:
+          SHIPPROOF_SCORE: ${{ steps.shipproof.outputs.score }}
+          SHIPPROOF_FAILED: ${{ steps.shipproof.outputs.failed }}
+        run: |
+          test "$SHIPPROOF_SCORE" = "100"
+          test "$SHIPPROOF_FAILED" = "0"

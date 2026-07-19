@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 import { runReadinessChecks } from "./checks/readiness.js";
 import type { AnalysisResult, CheckStatus, Readiness } from "./types.js";
 
-export const SHIPPROOF_VERSION = "0.1.0";
+export const SHIPPROOF_VERSION = "0.2.0";
 
 const scoreFactors: Record<CheckStatus, number> = {
   pass: 1,

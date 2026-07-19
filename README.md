@@ -8,6 +8,8 @@
 
 <p align="center">
   <a href="https://github.com/CalvaryBloom/shipproof/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/CalvaryBloom/shipproof/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://www.npmjs.com/package/shipproof"><img alt="npm version" src="https://img.shields.io/npm/v/shipproof?logo=npm&color=cb3837"></a>
+  <a href="https://www.npmjs.com/package/shipproof"><img alt="npm downloads" src="https://img.shields.io/npm/dm/shipproof?logo=npm"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-22c55e"></a>
   <img alt="Node 22.13+" src="https://img.shields.io/badge/node-%3E%3D22.13-339933">
 </p>
@@ -81,6 +83,29 @@ shipproof [path] [options]
 
 By default, ShipProof exits with code `1` when at least one blocking issue is found and `2` for invalid input. This makes it useful in continuous integration. Warnings lower the score but do not change the exit code.
 
+## GitHub Action
+
+Add ShipProof to pull requests without installing or configuring anything in the repository:
+
+```yaml
+name: ShipProof
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: CalvaryBloom/shipproof@v0.2.0
+        id: shipproof
+```
+
+The action writes a compact score and its actionable findings to the workflow summary. It fails the job when a blocking issue is found; set `fail-on-issues: false` to use it as an advisory check. The outputs `score`, `readiness`, `warnings`, and `failed` are available to later steps.
+
 ## Scoring
 
 Each applicable check has an explicit weight. Passing earns the full weight, a warning earns half, and a failure earns none.
@@ -108,10 +133,10 @@ ShipProof has no runtime dependencies. TypeScript and its Node.js declarations a
 
 ## Roadmap
 
-- GitHub Action with a compact pull-request summary.
 - Configurable thresholds through `shipproof.config.json`.
 - Deeper Python, Rust, and Go checks.
 - SARIF output for GitHub code scanning.
+- Optional pull-request comments with score changes.
 - A public check catalog with evidence and false-positive guidance.
 - Automated trusted publishing with provenance for future releases.
 

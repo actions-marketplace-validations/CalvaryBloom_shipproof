@@ -7,6 +7,13 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/CalvaryBloom/shipproof/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/CalvaryBloom/shipproof/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://www.npmjs.com/package/shipproof"><img alt="versión en npm" src="https://img.shields.io/npm/v/shipproof?logo=npm&color=cb3837"></a>
+  <a href="https://www.npmjs.com/package/shipproof"><img alt="descargas en npm" src="https://img.shields.io/npm/dm/shipproof?logo=npm"></a>
+  <a href="LICENSE"><img alt="Licencia MIT" src="https://img.shields.io/badge/license-MIT-22c55e"></a>
+</p>
+
+<p align="center">
   <a href="README.md">English</a> · Español
 </p>
 
@@ -62,6 +69,29 @@ npx shipproof --no-fail
 
 Por defecto, ShipProof termina con código `1` si encuentra al menos un problema bloqueante y con código `2` cuando la entrada no es válida. Los avisos reducen la puntuación, pero no cambian el código de salida.
 
+## GitHub Action
+
+Añade ShipProof a tus pull requests sin instalar ni configurar nada en el repositorio:
+
+```yaml
+name: ShipProof
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: CalvaryBloom/shipproof@v0.2.0
+        id: shipproof
+```
+
+La acción añade al resumen del workflow la puntuación y los hallazgos que requieren atención. Por defecto falla si encuentra un problema bloqueante; usa `fail-on-issues: false` para obtener solo un informe. Los pasos posteriores pueden consultar los outputs `score`, `readiness`, `warnings` y `failed`.
+
 ## Puntuación
 
 Cada comprobación aplicable tiene un peso explícito. Un resultado correcto obtiene todo el peso, un aviso obtiene la mitad y un fallo no obtiene puntos.
@@ -89,10 +119,10 @@ ShipProof no tiene dependencias en tiempo de ejecución. TypeScript y las declar
 
 ## Próximos objetivos
 
-- Acción de GitHub con un resumen compacto para cada pull request.
 - Umbrales configurables mediante `shipproof.config.json`.
 - Comprobaciones más profundas para Python, Rust y Go.
 - Salida SARIF compatible con el análisis de código de GitHub.
+- Comentarios opcionales en pull requests con la evolución de la puntuación.
 - Catálogo público de comprobaciones y falsos positivos conocidos.
 - Publicación automatizada y con procedencia verificable para las próximas versiones.
 

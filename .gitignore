@@ -1,5 +1,8 @@
 node_modules/
-dist/
+dist/**
+!dist/src/
+!dist/src/**/
+!dist/src/**/*.js
 coverage/
 *.log
 .DS_Store
