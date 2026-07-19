@@ -23,7 +23,7 @@ La IA puede generar una aplicación convincente en pocos minutos. Eso no signifi
 ShipProof convierte esa revisión final imprecisa en un comando repetible:
 
 ```bash
-npx github:CalvaryBloom/shipproof
+npx shipproof
 ```
 
 Actualmente reconoce proyectos Node.js, Python, Rust y Go. Nunca ejecuta comandos del proyecto inspeccionado ni sube su código fuente.
@@ -48,16 +48,16 @@ Requiere Node.js 22.13 o posterior.
 
 ```bash
 # Analizar el directorio actual
-npx github:CalvaryBloom/shipproof
+npx shipproof
 
 # Analizar otro directorio
-npx github:CalvaryBloom/shipproof ./mi-proyecto
+npx shipproof ./mi-proyecto
 
 # Generar un informe JSON
-npx github:CalvaryBloom/shipproof --json
+npx shipproof --json
 
 # Informar sin devolver un código de error
-npx github:CalvaryBloom/shipproof --no-fail
+npx shipproof --no-fail
 ```
 
 Por defecto, ShipProof termina con código `1` si encuentra al menos un problema bloqueante y con código `2` cuando la entrada no es válida. Los avisos reducen la puntuación, pero no cambian el código de salida.
@@ -94,7 +94,7 @@ ShipProof no tiene dependencias en tiempo de ejecución. TypeScript y las declar
 - Comprobaciones más profundas para Python, Rust y Go.
 - Salida SARIF compatible con el análisis de código de GitHub.
 - Catálogo público de comprobaciones y falsos positivos conocidos.
-- Publicación en npm con procedencia verificable después de recibir las primeras opiniones.
+- Publicación automatizada y con procedencia verificable para las próximas versiones.
 
 ## Colaborar
 

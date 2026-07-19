@@ -29,7 +29,7 @@ AI can create a convincing application in minutes. That does not mean the result
 ShipProof turns that vague final review into a repeatable command:
 
 ```bash
-npx github:CalvaryBloom/shipproof
+npx shipproof
 ```
 
 It currently recognizes Node.js, Python, Rust, and Go projects. It never executes commands from the project being inspected and never uploads source code.
@@ -54,16 +54,16 @@ Requires Node.js 22.13 or newer.
 
 ```bash
 # Inspect the current directory
-npx github:CalvaryBloom/shipproof
+npx shipproof
 
 # Inspect another directory
-npx github:CalvaryBloom/shipproof ./my-project
+npx shipproof ./my-project
 
 # Produce machine-readable output
-npx github:CalvaryBloom/shipproof --json
+npx shipproof --json
 
 # Report findings without a failing exit code
-npx github:CalvaryBloom/shipproof --no-fail
+npx shipproof --no-fail
 ```
 
 ### Options
@@ -113,7 +113,7 @@ ShipProof has no runtime dependencies. TypeScript and its Node.js declarations a
 - Deeper Python, Rust, and Go checks.
 - SARIF output for GitHub code scanning.
 - A public check catalog with evidence and false-positive guidance.
-- npm release with provenance after the first public feedback round.
+- Automated trusted publishing with provenance for future releases.
 
 The best roadmap item is the one backed by a real repository and a reproducible failure. Please use the feature request template to share one.
 
