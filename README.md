@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://github.com/CalvaryBloom/shipproof/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/CalvaryBloom/shipproof/actions/workflows/ci.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-22c55e"></a>
-  <img alt="Node 20+" src="https://img.shields.io/badge/node-%3E%3D20-339933">
+  <img alt="Node 22.13+" src="https://img.shields.io/badge/node-%3E%3D22.13-339933">
 </p>
 
 <p align="center">
@@ -50,7 +50,7 @@ The output includes suggestions rather than exposing any matched secret value. S
 
 ## Usage
 
-Requires Node.js 20 or newer.
+Requires Node.js 22.13 or newer.
 
 ```bash
 # Inspect the current directory

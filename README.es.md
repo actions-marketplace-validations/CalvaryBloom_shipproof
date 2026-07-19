@@ -44,7 +44,7 @@ El resultado indica dónde está el posible problema sin mostrar el valor de una
 
 ## Uso
 
-Requiere Node.js 20 o posterior.
+Requiere Node.js 22.13 o posterior.
 
 ```bash
 # Analizar el directorio actual

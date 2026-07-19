@@ -11,3 +11,8 @@ Notable changes follow [Semantic Versioning](https://semver.org/).
 - Conservative secret-pattern and sensitive-filename detection.
 - Human-readable terminal output and machine-readable JSON.
 - Automated tests and multi-version Node.js CI.
+
+### Changed
+
+- Set the supported runtime baseline to Node.js 22.13 and test on Node.js 22, 24, and 26.
+- Updated the CI actions and TypeScript toolchain to their current major versions.

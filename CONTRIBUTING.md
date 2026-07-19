@@ -12,7 +12,7 @@ Small bug fixes can go directly to a pull request. Please open an issue first fo
 
 ## Local development
 
-Requirements: Node.js 20 or newer and pnpm 11.
+Requirements: Node.js 22.13 or newer and pnpm 11.
 
 ```bash
 pnpm install
