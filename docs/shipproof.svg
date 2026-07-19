@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 190" role="img" aria-labelledby="title description">
+  <title id="title">ShipProof</title>
+  <description id="description">A ship inside a shield beside the ShipProof wordmark.</description>
+  <defs>
+    <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#shield)" d="M96 10 169 36v52c0 49-28 78-73 94-45-16-73-45-73-94V36z"/>
+  <path fill="#fff" d="m53 99 9 27c21 10 47 10 68 0l9-27-43 13zm29-47h28v46L96 93 82 98zm-20 55 34-16 34 16-7 11c-17 7-37 7-54 0z"/>
+  <path fill="#22d3ee" d="M56 132c26 11 54 11 80 0-7 15-20 26-40 35-20-9-33-20-40-35z"/>
+  <text x="205" y="112" fill="#111827" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="72" font-weight="800" letter-spacing="-3">ShipProof</text>
+  <text x="210" y="150" fill="#64748b" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="20" letter-spacing="2">KNOW BEFORE YOU SHIP</text>
+</svg>

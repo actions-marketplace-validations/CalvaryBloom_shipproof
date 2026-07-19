@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 500" role="img" aria-labelledby="title description">
+  <title id="title">ShipProof terminal demo</title>
+  <description id="description">A terminal showing a ShipProof project readiness score and checks.</description>
+  <rect width="920" height="500" rx="18" fill="#0f172a"/>
+  <circle cx="30" cy="28" r="7" fill="#fb7185"/>
+  <circle cx="54" cy="28" r="7" fill="#fbbf24"/>
+  <circle cx="78" cy="28" r="7" fill="#4ade80"/>
+  <g font-family="ui-monospace,SFMono-Regular,Consolas,monospace" font-size="18">
+    <text x="28" y="78" fill="#94a3b8">$ npx shipproof</text>
+    <text x="28" y="126" fill="#c084fc" font-weight="700">SHIPPROOF</text>
+    <text x="28" y="156" fill="#64748b">acme-app · Node.js</text>
+    <text x="28" y="204" fill="#4ade80" font-weight="700">92/100</text>
+    <text x="138" y="204" fill="#4ade80">██████████████████</text>
+    <text x="354" y="204" fill="#334155">██</text>
+    <text x="392" y="204" fill="#e2e8f0">Ready to ship</text>
+    <text x="28" y="252" fill="#4ade80">✓</text><text x="54" y="252" fill="#e2e8f0">README: Clear installation and usage guide.</text>
+    <text x="28" y="286" fill="#4ade80">✓</text><text x="54" y="286" fill="#e2e8f0">Secret exposure: No common patterns detected.</text>
+    <text x="28" y="320" fill="#4ade80">✓</text><text x="54" y="320" fill="#e2e8f0">Continuous integration: Found 1 workflow.</text>
+    <text x="28" y="354" fill="#fbbf24">!</text><text x="54" y="354" fill="#e2e8f0">Community health: Missing SECURITY.md.</text>
+    <text x="54" y="384" fill="#64748b">→ Add lightweight guidance before inviting contributors.</text>
+    <text x="28" y="438" fill="#64748b">10 passed · 1 warning · 0 failed · 31ms</text>
+  </g>
+</svg>

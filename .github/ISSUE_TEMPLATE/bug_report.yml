@@ -1,0 +1,41 @@
+name: Bug report
+description: Report a reproducible problem in ShipProof
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve ShipProof. Never paste credentials or private source code.
+  - type: input
+    id: version
+    attributes:
+      label: ShipProof version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: dropdown
+    id: ecosystem
+    attributes:
+      label: Project ecosystem
+      options: [Node.js, Python, Rust, Go, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Share the smallest safe example and the command you ran.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true

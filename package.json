@@ -1,0 +1,55 @@
+{
+  "name": "shipproof",
+  "version": "0.1.0",
+  "description": "Zero-config release readiness checks for AI-assisted projects.",
+  "type": "module",
+  "bin": {
+    "shipproof": "dist/src/cli.js"
+  },
+  "files": [
+    "dist/src",
+    "docs/*.svg",
+    "README.md",
+    "README.es.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm build && node --test dist/test/analyze.test.js",
+    "start": "node dist/src/cli.js",
+    "prepare": "tsc -p tsconfig.json",
+    "prepack": "pnpm test"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "code-quality",
+    "developer-tools",
+    "release-readiness",
+    "security"
+  ],
+  "author": "CalvaryBloom",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CalvaryBloom/shipproof.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CalvaryBloom/shipproof/issues"
+  },
+  "homepage": "https://github.com/CalvaryBloom/shipproof#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@11.9.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}
