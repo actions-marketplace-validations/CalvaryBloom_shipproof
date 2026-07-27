@@ -3,6 +3,7 @@ import { statSync } from "node:fs";
 import { resolve } from "node:path";
 import { analyzeProject, SHIPPROOF_VERSION } from "./analyze.js";
 import { renderJson } from "./reporters/json.js";
+import { renderSarif } from "./reporters/sarif.js";
 import { renderTerminal } from "./reporters/terminal.js";
 const help = `ShipProof ${SHIPPROOF_VERSION}
 
@@ -13,6 +14,7 @@ Usage:
 
 Options:
   --json       Print machine-readable JSON
+  --sarif      Print SARIF 2.1.0 for code scanning
   --no-color   Disable ANSI colors
   --no-fail    Exit with code 0 even when blocking issues are found
   -h, --help   Show help
@@ -23,11 +25,13 @@ Examples:
   shipproof
   shipproof ./my-project
   shipproof --json > shipproof-report.json
+  shipproof --sarif --no-fail > shipproof.sarif
 `;
 function parseArguments(arguments_) {
     let target = ".";
     let targetWasSet = false;
     let json = false;
+    let sarif = false;
     let color = process.stdout.isTTY && process.env.NO_COLOR === undefined;
     let failOnIssues = true;
     let showHelp = false;
@@ -35,6 +39,8 @@ function parseArguments(arguments_) {
     for (const argument of arguments_) {
         if (argument === "--json")
             json = true;
+        else if (argument === "--sarif")
+            sarif = true;
         else if (argument === "--no-color")
             color = false;
         else if (argument === "--no-fail")
@@ -52,7 +58,9 @@ function parseArguments(arguments_) {
             targetWasSet = true;
         }
     }
-    return { target, json, color, failOnIssues, help: showHelp, version: showVersion };
+    if (json && sarif)
+        throw new Error("--json and --sarif cannot be used together.");
+    return { target, json, sarif, color, failOnIssues, help: showHelp, version: showVersion };
 }
 function main() {
     let options;
@@ -84,7 +92,12 @@ function main() {
         return;
     }
     const result = analyzeProject(target);
-    process.stdout.write(options.json ? `${renderJson(result)}\n` : renderTerminal(result, options.color));
+    const output = options.json
+        ? `${renderJson(result)}\n`
+        : options.sarif
+            ? `${renderSarif(result)}\n`
+            : renderTerminal(result, options.color);
+    process.stdout.write(output);
     if (options.failOnIssues && result.summary.failed > 0)
         process.exitCode = 1;
 }

@@ -2,6 +2,13 @@
 
 Notable changes follow [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Added
+
+- SARIF 2.1.0 output for GitHub Code Scanning and compatible analysis systems.
+- Structured, repository-relative check locations without exposing matched secret values.
+
 ## 0.2.0 - 2026-07-19
 
 ### Added

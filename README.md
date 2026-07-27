@@ -64,6 +64,9 @@ npx shipproof ./my-project
 # Produce machine-readable output
 npx shipproof --json
 
+# Produce SARIF 2.1.0 for code scanning
+npx shipproof --sarif --no-fail > shipproof.sarif
+
 # Report findings without a failing exit code
 npx shipproof --no-fail
 ```
@@ -73,12 +76,13 @@ npx shipproof --no-fail
 ```text
 shipproof [path] [options]
 
---json       Print machine-readable JSON
---no-color   Disable ANSI colors
---no-fail    Exit with code 0 even when blocking issues are found
--h, --help   Show help
+--json        Print machine-readable JSON
+--sarif       Print SARIF 2.1.0 for code scanning
+--no-color    Disable ANSI colors
+--no-fail     Exit with code 0 even when blocking issues are found
+-h, --help    Show help
 -v, --version
-             Show the version
+              Show the version
 ```
 
 By default, ShipProof exits with code `1` when at least one blocking issue is found and `2` for invalid input. This makes it useful in continuous integration. Warnings lower the score but do not change the exit code.
@@ -105,6 +109,37 @@ jobs:
 ```
 
 The action writes a compact score and its actionable findings to the workflow summary. It fails the job when a blocking issue is found; set `fail-on-issues: false` to use it as an advisory check. The outputs `score`, `readiness`, `warnings`, and `failed` are available to later steps.
+
+## GitHub Code Scanning
+
+ShipProof can emit SARIF 2.1.0 so warnings and failures appear in GitHub's code scanning interface. Passing and informational checks stay in the SARIF rule catalog without creating alerts.
+
+```yaml
+name: ShipProof code scanning
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  shipproof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Generate ShipProof SARIF
+        run: npx shipproof --sarif --no-fail > shipproof.sarif
+      - name: Upload ShipProof results
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: shipproof.sarif
+          category: shipproof
+```
+
+`--no-fail` lets the upload step run even when ShipProof finds a blocking issue; the findings are still recorded as code scanning alerts. Every alert uses a repository-relative location, and potential secret values are never included.
 
 ## Scoring
 
@@ -135,7 +170,6 @@ ShipProof has no runtime dependencies. TypeScript and its Node.js declarations a
 
 - Configurable thresholds through `shipproof.config.json`.
 - Deeper Python, Rust, and Go checks.
-- SARIF output for GitHub code scanning.
 - Optional pull-request comments with score changes.
 - A public check catalog with evidence and false-positive guidance.
 - Automated trusted publishing with provenance for future releases.

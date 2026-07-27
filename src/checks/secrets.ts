@@ -4,6 +4,7 @@ import { isSmallTextFile, listFiles, readUtf8 } from "../files.js";
 export interface SecretFinding {
   path: string;
   kind: string;
+  line: number;
 }
 
 const safeEnvironmentSuffixes = [".example", ".sample", ".template"];
@@ -46,15 +47,17 @@ export function findPotentialSecrets(root: string): SecretFinding[] {
 
   for (const path of files) {
     const fileKind = sensitiveFilename(path);
-    if (fileKind) findings.push({ path, kind: fileKind });
+    if (fileKind) findings.push({ path, kind: fileKind, line: 1 });
 
     if (!isSmallTextFile(root, path)) continue;
     const content = readUtf8(join(root, path));
     if (content === undefined) continue;
 
     for (const { kind, pattern } of contentPatterns) {
-      if (pattern.test(content)) {
-        findings.push({ path, kind });
+      const match = pattern.exec(content);
+      if (match) {
+        const line = content.slice(0, match.index).split(/\r?\n/).length;
+        findings.push({ path, kind, line });
         break;
       }
     }

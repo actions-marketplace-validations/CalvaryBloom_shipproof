@@ -1,11 +1,17 @@
 export type CheckStatus = "pass" | "warn" | "fail" | "info";
 
+export interface CheckLocation {
+  path: string;
+  line: number;
+}
+
 export interface CheckResult {
   id: string;
   title: string;
   status: CheckStatus;
   message: string;
   suggestion?: string;
+  locations?: CheckLocation[];
   weight: number;
 }
 

@@ -63,8 +63,25 @@ npx shipproof ./mi-proyecto
 # Generar un informe JSON
 npx shipproof --json
 
+# Generar SARIF 2.1.0 para el análisis de código
+npx shipproof --sarif --no-fail > shipproof.sarif
+
 # Informar sin devolver un código de error
 npx shipproof --no-fail
+```
+
+### Opciones
+
+```text
+shipproof [ruta] [opciones]
+
+--json        Genera JSON legible por máquinas
+--sarif       Genera SARIF 2.1.0 para el análisis de código
+--no-color    Desactiva los colores ANSI
+--no-fail     Termina con código 0 aunque haya problemas bloqueantes
+-h, --help    Muestra la ayuda
+-v, --version
+              Muestra la versión
 ```
 
 Por defecto, ShipProof termina con código `1` si encuentra al menos un problema bloqueante y con código `2` cuando la entrada no es válida. Los avisos reducen la puntuación, pero no cambian el código de salida.
@@ -91,6 +108,37 @@ jobs:
 ```
 
 La acción añade al resumen del workflow la puntuación y los hallazgos que requieren atención. Por defecto falla si encuentra un problema bloqueante; usa `fail-on-issues: false` para obtener solo un informe. Los pasos posteriores pueden consultar los outputs `score`, `readiness`, `warnings` y `failed`.
+
+## Análisis de código en GitHub
+
+ShipProof puede generar SARIF 2.1.0 para mostrar sus avisos y fallos en la interfaz de análisis de código de GitHub. Las comprobaciones correctas e informativas permanecen en el catálogo de reglas SARIF sin crear alertas.
+
+```yaml
+name: ShipProof code scanning
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  shipproof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Generar el informe SARIF de ShipProof
+        run: npx shipproof --sarif --no-fail > shipproof.sarif
+      - name: Subir los resultados de ShipProof
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: shipproof.sarif
+          category: shipproof
+```
+
+`--no-fail` permite ejecutar el paso de subida aunque ShipProof encuentre un problema bloqueante; los hallazgos siguen registrándose como alertas. Cada alerta usa una ubicación relativa al repositorio y nunca incluye el valor de un posible secreto.
 
 ## Puntuación
 
@@ -121,7 +169,6 @@ ShipProof no tiene dependencias en tiempo de ejecución. TypeScript y las declar
 
 - Umbrales configurables mediante `shipproof.config.json`.
 - Comprobaciones más profundas para Python, Rust y Go.
-- Salida SARIF compatible con el análisis de código de GitHub.
 - Comentarios opcionales en pull requests con la evolución de la puntuación.
 - Catálogo público de comprobaciones y falsos positivos conocidos.
 - Publicación automatizada y con procedencia verificable para las próximas versiones.

@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { analyzeProject } from "../src/analyze.js";
 import { renderJson } from "../src/reporters/json.js";
+import { renderSarif } from "../src/reporters/sarif.js";
 
 const temporaryProjects: string[] = [];
 
@@ -81,14 +82,17 @@ test("reports a secret location without exposing the secret value", () => {
   const token = `ghp_${"a".repeat(24)}`;
   const root = project({
     "package.json": JSON.stringify({ name: "secret-project", scripts: { test: "node --test" } }),
-    "config.ts": `export const token = "${token}";`,
+    "config.ts": `export const label = "demo";\nexport const token = "${token}";`,
   });
 
   const analysis = analyzeProject(root);
   const secretCheck = analysis.checks.find((check) => check.id === "secrets");
   const json = renderJson(analysis);
+  const sarif = renderSarif(analysis);
 
   assert.equal(secretCheck?.status, "fail");
   assert.match(secretCheck?.message ?? "", /config\.ts/);
+  assert.deepEqual(secretCheck?.locations, [{ path: "config.ts", line: 2 }]);
   assert.doesNotMatch(json, new RegExp(token));
+  assert.doesNotMatch(sarif, new RegExp(token));
 });
